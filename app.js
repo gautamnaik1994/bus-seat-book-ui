@@ -1,21 +1,23 @@
 var tableBody = document.querySelector("#busTableBody");
 var totalSeats = 20;
 var seatsOnEachRow = 2;
-var selectedSeats = [31, 41, 61]; //can be empty or can be pre populated from server
+
+//can be empty or can be pre populated from server
+var selectedSeats = [31, 41, 61];
 
 function generateBus() {
-  for (var i = 0; i < totalSeats / seatsOnEachRow; i++) {
+  for (var i = 1; i <= totalSeats / seatsOnEachRow; i++) {
     tableBody.appendChild(createRow(i));
   }
 }
 
 function createRow(rowNumber) {
   var seatRow = document.createElement("tr");
-  for (var i = 0; i < seatsOnEachRow + 1; i++) {
+  for (var i = 1; i <= seatsOnEachRow + 1; i++) {
     //if middle column, then create empty
-    if (i == seatsOnEachRow / 2) {
+    if (i == seatsOnEachRow / 2 + 1) {
       seatRow.appendChild(createMiddlePassge());
-    } else if (i < seatsOnEachRow / 2) {
+    } else if (i <= seatsOnEachRow / 2) {
       seatRow.appendChild(createSeat(rowNumber, i));
     }
     // following code ensures that seats get proper number and id
@@ -37,7 +39,7 @@ function createSeat(rowNumber, seatIndex) {
   var seat = document.createElement("td");
   var id = parseInt(rowNumber.toString() + seatIndex.toString());
   seat.setAttribute("id", id);
-  seat.textContent = id.toString();
+  seat.textContent = id;
   seat.classList.add("seat");
 
   //Check if seat is occupied by someone
@@ -62,7 +64,7 @@ function seatOnclickListener(e) {
     }
     clickedSeat.classList.remove("selected");
   } else {
-    selectedSeats.push(clickedSeat.id);
+    selectedSeats.push(parseInt(clickedSeat.id));
     clickedSeat.classList.add("selected");
   }
   console.log(selectedSeats);
